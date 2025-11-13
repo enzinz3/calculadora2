@@ -1,0 +1,128 @@
+@charset "UTF-8";
+
+body {
+    background-image: url(https://cdn.wallpapersafari.com/94/14/N8XJCm.jpg);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    height: 900px;
+    overflow: hidden;
+
+    /* Distorção de TV */
+    animation: vhsDistort 6s ease-in-out infinite;
+    filter: contrast(1.1) saturate(0.8) hue-rotate(-10deg);
+}
+
+/* ======== SEU LAYOUT ORIGINAL ======== */
+.calculator-grid {
+    margin-bottom: 82px;
+    margin-left: 33.4%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(5, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(8, 50px);
+    z-index: 2; /* Fica acima do efeito VHS */
+}
+
+.span-two {
+    grid-column: span 2;
+    background-color: rgba(190, 252, 226, 0.75);
+}
+
+button {
+    background-color: rgba(190, 252, 226, 0.75);
+}
+
+.output {
+    grid-column: 1 / -1;
+    background-color: rgba(190, 252, 226, 0.63);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 20px;
+    word-wrap: break-word;
+    word-break: break-all;
+    height: 100px;
+    margin-top: 282px;
+}
+
+/* ======== EFEITO VHS / TV ======== */
+
+/* Camada de ruído animado (GIF VHS) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://media.tenor.com/fQzG1RrPj_UAAAAC/tv-static.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.25;
+    mix-blend-mode: screen; /* mistura o GIF com o fundo */
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Linhas horizontais de varredura */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(0, 0, 0, 0.05) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+    animation: scanlines 8s linear infinite;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ======== ANIMAÇÕES ======== */
+@keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+}
+
+@keyframes vhsDistort {
+    0% {
+        filter: contrast(1.1) saturate(0.8) hue-rotate(-10deg)
+                blur(0px);
+        transform: translateX(0px) skewX(0deg);
+    }
+    20% {
+        filter: contrast(1.2) saturate(0.7) hue-rotate(-15deg)
+                blur(1px);
+        transform: translateX(-2px) skewX(1deg);
+    }
+    40% {
+        filter: contrast(1.0) saturate(0.8) hue-rotate(-5deg)
+                blur(0px);
+        transform: translateX(1px) skewX(-1deg);
+    }
+    60% {
+        filter: contrast(1.15) saturate(0.9) hue-rotate(-8deg)
+                blur(0.5px);
+        transform: translateX(-1px) skewX(0.5deg);
+    }
+    80% {
+        filter: contrast(1.05) saturate(0.8) hue-rotate(-12deg)
+                blur(0.3px);
+        transform: translateX(1px) skewX(-0.5deg);
+    }
+    100% {
+        filter: contrast(1.1) saturate(0.8) hue-rotate(-10deg)
+                blur(0px);
+        transform: translateX(0px) skewX(0deg);
+    }
+}
